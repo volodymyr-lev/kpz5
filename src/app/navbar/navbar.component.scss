@@ -1,0 +1,73 @@
+:root {
+    --background-color: #121212;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --text-color: #e0e0e0;
+    --muted-text-color: #757575;
+    --navbar-color: #1f1f1f;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--navbar-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-left a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-left a:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar-right a {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar-right a:hover{
+    cursor: pointer;
+}
+
+.login {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.login:hover {
+    background-color: rgba(187, 134, 252, 0.1);
+}
+
+.register {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.register:hover {
+    background-color: var(--secondary-color);
+}

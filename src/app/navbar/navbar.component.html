@@ -1,0 +1,23 @@
+<nav class="navbar">
+    <div class="navbar-left">
+        <a (click)="navigateTo('')">Головна</a>
+        <a routerLink="/courses">Курси</a>
+        <a routerLink="/tasks">Завдання</a>
+        <a routerLink="/profile">Профіль</a>
+    </div>
+
+    <div *ngIf="authService.isAuthenticated(); else guestLinks">
+        <span>Вітаю, {{ authService.currentUserValue?.email }}</span>
+        <button (click)="logout()">Вийти</button>
+        <div *ngIf="authService.hasRole('Administrator')">
+          <a routerLink="/admin">Адмін-панель</a>
+        </div>
+        <div *ngIf="authService.hasRole('Student')">
+          <a routerLink="/student">Мій кабінет</a>
+        </div>
+      </div>
+    <ng-template #guestLinks>
+        <a routerLink="/login">Увійти</a>
+        <a routerLink="/register">Реєстрація</a>
+    </ng-template>
+</nav>
