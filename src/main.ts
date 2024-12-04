@@ -24,8 +24,6 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes, withHashLocation()),
-    provideHttpClient(withInterceptors([customInterceptorInterceptor, authInterceptor],
-
-    )),
+    provideHttpClient(withInterceptors([customInterceptorInterceptor, authInterceptor])),
   ]
 });
