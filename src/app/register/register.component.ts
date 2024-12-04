@@ -28,8 +28,8 @@ export class RegisterComponent {
         this.confirmPassword = '';
       },
       (error) => {
-        this.errorMessage = error.error.message || 'Помилка реєстрації';
+        this.errorMessage = error.error.message || 'Помилка реєстрації'; //
       }
     );
   }
-}
+} 
