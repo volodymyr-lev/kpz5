@@ -9,7 +9,6 @@ import { AuthService } from '../auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   standalone:true,
-  encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent {
   email = '';

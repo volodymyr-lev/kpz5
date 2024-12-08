@@ -12,18 +12,27 @@ import { RegisterComponent } from './app/register/register.component';
 import { HomeComponent } from './app/home/home.component';
 import { UnauthorizedComponent } from './app/unauthorized/unauthorized.component';
 import { AuthGuard } from './app/auth.guard';
+import { RoleGuard } from './app/role.guard';
+import { CoursesComponent } from './app/courses/courses.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'custom', component: CustomComponentComponent },
-  { path:'unauthorized', component: UnauthorizedComponent },
-  { path: '', component: HomeComponent, pathMatch: 'full', canActivate:[AuthGuard] }, 
+  { path: 'unauthorized', component: UnauthorizedComponent },
+  { 
+    path: 'courses', component: CoursesComponent, canActivate:[RoleGuard], 
+    data: {roles:["Student"]}
+  }, 
+  { 
+    path: '', component: HomeComponent, pathMatch: 'full', canActivate:[RoleGuard], 
+    data: {roles:["Administrator", "Student", "Lecturer", "Assistant", "Mentor", "Advisor", "Unassigned"]} 
+  },
 ];
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes, withHashLocation()),
-    provideHttpClient(withInterceptors([customInterceptorInterceptor, authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor])),
   ]
-});
+}).catch((err) => console.error(err));;

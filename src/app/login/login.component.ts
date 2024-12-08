@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone:true,
-  encapsulation: ViewEncapsulation.None
 })
 
 export class LoginComponent {
@@ -19,7 +18,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
-
+  
   onSubmit() {
     this.authService.login(this.email, this.password).subscribe({
       next: () => this.router.navigate(['/']),

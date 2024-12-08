@@ -6,7 +6,6 @@ import { Component, ViewEncapsulation  } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   standalone: true,
-  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {
 

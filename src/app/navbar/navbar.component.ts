@@ -1,14 +1,14 @@
 import { Component, ViewEncapsulation} from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [ CommonModule, RouterModule ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   standalone: true,
-  encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent {
   constructor(private router: Router, public authService: AuthService) {}
