@@ -105,6 +105,7 @@ $card-background: #1f1f1f;
     border-radius: 20px;
     padding: 0.5rem 1rem;
     transition: background-color 0.3s ease;
+    max-width: 120px;
 
     &:hover {
       background-color: lighten($primary-color, 10%);
@@ -134,6 +135,11 @@ $card-background: #1f1f1f;
     animation: spin 1s linear infinite;
   }
 }
+
+.accepted-status {
+    color: rgb(131, 240, 131);
+  }
+  
 
 @keyframes spin {
   0% { transform: rotate(0deg); }

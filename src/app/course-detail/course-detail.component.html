@@ -34,9 +34,9 @@
             <h3>{{ assignment.title }}</h3>
             <p>{{ assignment.description }}</p>
             <div class="assignment-meta">
-              <span>Deadline: {{ assignment.dueDate | date:'dd.MM.yyyy' }}</span>
-              <span>Статус: {{ assignment.status }}</span>
-            </div>
+                <span>Deadline: {{ assignment.dueDate | date:'dd.MM.yyyy' }}</span>
+                <span [ngClass]="{'accepted-status': assignment.status === 'Accepted'}">Статус: {{ assignment.status }}</span>
+              </div>
           </div>
           <button 
             class="btn-go-to-assignment"

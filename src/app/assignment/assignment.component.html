@@ -1,1 +1,57 @@
-<p>assignment works!</p>
+<div class="assignment-page">
+    <div class="assignment-header">
+      <h1 class="assignment-title">{{ assignment?.title }}</h1>
+      <div class="assignment-status">{{ assignment?.status }}</div>
+    </div>
+  
+    <div class="assignment-details-table" *ngIf="assignment">
+      <div class="table-row">
+        <div class="table-cell">Course ID</div>
+        <div class="table-cell">{{ assignment.courseId }}</div>
+      </div>
+      <div class="table-row">
+        <div class="table-cell">Advisor</div>
+        <div class="table-cell">{{ courseDetails.lecturer.userName || 'Not Specified' }}</div>
+      </div>
+      <div class="table-row">
+        <div class="table-cell">Due Date</div>
+        <div class="table-cell">{{ assignment.dueDate | date:'medium' }}</div>
+      </div>
+      <div class="table-row">
+        <div class="table-cell">Description</div>
+        <div class="table-cell">{{ assignment.description }}</div>
+      </div>
+    </div>
+  
+    <div class="file-upload-section" *ngIf="assignment">
+      <h2 class="upload-title">Upload Assignment</h2>
+      <p class="upload-description">Please upload your completed assignment file</p>
+  
+      <div class="file-input-wrapper">
+        <input 
+          type="file" 
+          (change)="onFileSelected($event)"
+          accept=".pdf,.doc,.docx,.txt"
+        />
+        <div class="file-input-button">Choose File</div>
+      </div>
+  
+      <button 
+        class="file-upload-button" 
+        (click)="uploadFile()"
+        [disabled]="!selectedFile || isUploading"
+      >
+        {{ isUploading ? 'Uploading...' : 'Upload File' }}
+      </button>
+  
+      <div *ngIf="selectedFile" class="file-name">
+        Selected File: {{ selectedFile.name }}
+      </div>
+    </div>
+  
+    <div *ngIf="!assignment" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Loading assignment details...</p>
+    </div>
+  </div>
+  

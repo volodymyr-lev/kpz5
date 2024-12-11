@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from '../auth.service';
 
@@ -38,5 +38,20 @@ export class CourseService {
 
   getUserCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.apiUrl}/by-group`);
+  }
+
+  uploadCourseWorkFile(formData: FormData): Observable<any> {
+    const uploadUrl = 'https://localhost:7274/api/coursework/file/upload';
+  
+    return this.http.post(uploadUrl, formData);
+  }
+
+  // Optional: Method to handle file upload progress
+  uploadProgress(event: any): number {
+    if (event.type === HttpEventType.UploadProgress) {
+      const percentDone = Math.round(100 * event.loaded / event.total);
+      return percentDone;
+    }
+    return 0;
   }
 }
