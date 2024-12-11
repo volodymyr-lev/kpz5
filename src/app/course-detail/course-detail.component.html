@@ -1,0 +1,61 @@
+<div class="course-page" *ngIf="courseDetails$ | async as courseDetails">
+    <div class="course-header">
+      <h1 class="course-title">{{ courseDetails.name }}</h1>
+      
+      <div class="course-info">
+        <div class="course-detail">
+          <span class="detail-label">Опис:</span>
+          <p>{{ courseDetails.description }}</p>
+        </div>
+        
+        <div class="course-detail">
+          <span class="detail-label">Кредити:</span>
+          <p>{{ courseDetails.credits }}</p>
+        </div>
+        
+        <div class="course-detail">
+          <span class="detail-label">Лектор:</span>
+          <p>{{ courseDetails.lecturer?.userName }}</p>
+        </div>
+        
+        <div class="course-detail">
+          <span class="detail-label">Навчальний план:</span>
+          <p>{{ courseDetails.syllabus }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="assignments-section">
+      <h2 class="assignments-title">Завдання курсу</h2>
+      
+      <div *ngIf="courseDetails.assignments && courseDetails.assignments.length; else noAssignments" class="assignments-list">
+        <div *ngFor="let assignment of courseDetails.assignments" class="assignment-item">
+          <div class="assignment-details">
+            <h3>{{ assignment.title }}</h3>
+            <p>{{ assignment.description }}</p>
+            <div class="assignment-meta">
+              <span>Deadline: {{ assignment.dueDate | date:'dd.MM.yyyy' }}</span>
+              <span>Статус: {{ assignment.status }}</span>
+            </div>
+          </div>
+          <button 
+            class="btn-go-to-assignment"
+            (click)="viewAssignmentDetails(assignment.id)"
+          >
+            Перейти до завдання
+          </button>
+        </div>
+      </div>
+  
+      <ng-template #noAssignments>
+        <p class="no-assignments">Наразі немає доступних завдань</p>
+      </ng-template>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Завантаження деталей курсу...</p>
+    </div>
+  </ng-template>

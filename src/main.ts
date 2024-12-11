@@ -14,6 +14,9 @@ import { UnauthorizedComponent } from './app/unauthorized/unauthorized.component
 import { AuthGuard } from './app/auth.guard';
 import { RoleGuard } from './app/role.guard';
 import { CoursesComponent } from './app/courses/courses.component';
+import { ProfileComponent } from './app/profile/profile.component';
+import { CourseDetailComponent } from './app/course-detail/course-detail.component';
+import { AssignmentComponent } from './app/assignment/assignment.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +27,15 @@ const routes: Routes = [
     path: 'courses', component: CoursesComponent, canActivate:[RoleGuard], 
     data: {roles:["Student"]}
   }, 
+  { 
+    path: 'course/:id', component: CourseDetailComponent, canActivate:[RoleGuard],
+    data: {roles:["Student"]}
+  },
+  {
+    path: 'course/:courseId/assignment/:assignmentId', component: AssignmentComponent, canActivate:[RoleGuard],
+    data: {roles:["Student"]}
+  },
+  { path: 'profile', component: ProfileComponent},
   { 
     path: '', component: HomeComponent, pathMatch: 'full', canActivate:[RoleGuard], 
     data: {roles:["Administrator", "Student", "Lecturer", "Assistant", "Mentor", "Advisor", "Unassigned"]} 

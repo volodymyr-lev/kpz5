@@ -1,52 +1,53 @@
-<div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold text-primary-color mb-8 text-center">
-        Мої курси
-      </h1>
-      
-      <ng-container *ngIf="courses$ | async as courses; else loading">
-        <ng-container *ngIf="courses.length; else noCourses">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div 
-              *ngFor="let course of courses" 
-              class="bg-[#1f1f1f] rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-xl"
-            >
-              <h2 class="text-xl font-semibold text-primary-color mb-4">
-                {{ course.name }}
-              </h2>
-              <p class="text-text-color mb-4">
-                {{ course.description }}
-              </p>
-              <div class="flex items-center">
-                <span class="text-muted-text-color mr-2">Викладач:</span>
-                <span class="text-secondary-color">
-                  {{ course.lecturer?.name || 'Не призначено' }}
-                </span>
-              </div>
-              <div class="mt-4 flex justify-between items-center">
-                <span class="text-muted-text-color text-sm">
-                  Кредити: {{ course.credits }}
-                </span>
+<div class="container-fluid px-4 py-5">
+    <h1 class="text-center mb-5" style="color: #e0e0e0;">Мої курси</h1>
+    
+    <ng-container *ngIf="courses$ | async as courses; else loading">
+      <ng-container *ngIf="courses.length; else noCourses">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div *ngFor="let course of courses" class="col">
+            <div class="card course-card">
+              <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <p class="card-text">{{ course.description }}</p>
+                
+                <div class="course-footer">
+                  <div>
+                    <span class="text-muted me-2" style="font-size: 0.9rem;" id="lecturer-text">Викладач:</span>
+                    <span class="lecturer-badge">
+                      {{ course.lecturer?.userName || 'Не призначено' }}
+                    </span>
+                  </div>
+                  <span class="credits-badge">
+                    Кредити: {{ course.credits }}
+                  </span>
+                </div>
+                
                 <button 
                   (click)="viewCourseDetails(course.id)"
-                  class="hero-btn start-btn text-sm px-4 py-2"
+                  class="btn btn-course w-100 mt-3"
                 >
                   Переглянути курс
                 </button>
               </div>
             </div>
           </div>
-        </ng-container>
-        
-        <ng-template #noCourses>
-          <div class="text-center text-muted-text-color">
-            Ви ще не записані на жодний курс.
-          </div>
-        </ng-template>
+        </div>
       </ng-container>
       
-      <ng-template #loading>
-        <div class="text-center text-muted-text-color mt-10">
-          Завантаження курсів...
+      <ng-template #noCourses>
+        <div class="empty-state">
+          <img src="/api/placeholder/200/200" alt="No Courses" class="mb-4"/>
+          <p>Ви ще не записані на жодний курс.</p>
         </div>
       </ng-template>
-    </div>
+    </ng-container>
+    
+    <ng-template #loading>
+      <div class="loading-state">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Завантаження...</span>
+        </div>
+        <p class="mt-3">Завантаження курсів...</p>
+      </div>
+    </ng-template>
+  </div>

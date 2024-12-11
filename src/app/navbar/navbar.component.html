@@ -10,7 +10,7 @@
             <span>Вітаю, {{ authService.currentUserValue?.email }}</span>
             <button (click)="logout()">Вийти</button>
             <a *ngIf="authService.hasRole('Administrator')" class="login" routerLink="/admin">Адмін-панель</a>
-            <a *ngIf="authService.hasRole('Student')" routerLink="/student">Мій кабінет</a>
+            <a *ngIf="authService.hasRole('Student')" routerLink="/profile">Мій кабінет</a>
         </ng-container>
         <ng-template #guestLinks>
             <a routerLink="/login" class="login">Увійти</a>
