@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router'; // Додаємо Router
 
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +14,7 @@ export class AuthService {
   private apiUrl = 'https://localhost:7274/api/Auth'; 
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
+  private jwtHelper = new JwtHelperService();
 
   constructor(
     private http: HttpClient, 
@@ -113,5 +116,16 @@ export class AuthService {
   getToken(): string | null {
     const currentUser = this.currentUserValue;
     return currentUser?.token || null;
+  }
+
+  getCurrentUserId(): string | null {
+    const token = JSON.parse(localStorage.getItem('currentUser') || '{}').token; 
+
+    console.log(token);
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
+    }
+    return null;
   }
 }

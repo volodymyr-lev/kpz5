@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 interface AssignmentData {
   id: number;
@@ -32,7 +33,8 @@ export class AssignmentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -65,13 +67,15 @@ export class AssignmentComponent implements OnInit {
 
       const formData = new FormData();
 
+      const studentId = this.authService.getCurrentUserId() || '';
 
 
+      
       formData.append('file', this.selectedFile);
       formData.append('title', this.assignment.title);
       formData.append('description', this.assignment.description);
       formData.append('advisorId', this.courseDetails.lecturer.id);
-      formData.append('studentId', 'currentStudentId'); 
+      formData.append('studentId', studentId); 
 
       this.courseService.uploadCourseWorkFile(formData).subscribe({
         next: (response) => {
