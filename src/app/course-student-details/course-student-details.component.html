@@ -1,0 +1,55 @@
+<div class="student-details-container">
+    <div class="details-section">
+      <div class="verification-section">
+        <h4>Верифікація</h4>
+        <div class="rule-selection">
+          <select 
+            *ngIf="availableRules.length"
+            (change)="verifyFile($event)"
+            [disabled]="isVerifying"
+          >
+            <option value="">Оберіть правило перевірки</option>
+            <option 
+              *ngFor="let rule of availableRules" 
+              [value]="rule.id"
+            >
+              {{ rule.name }}
+            </option>
+          </select>
+          <div *ngIf="isVerifying" class="spinner">Перевірка...</div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Right Section: Violations -->
+    <div class="violations-section">
+      <h3>Результати перевірки</h3>
+      <div *ngIf="verificationResult" class="verification-result">
+        <div 
+          [ngClass]="{
+            'verification-passed': verificationResult.isVerified,
+            'verification-failed': !verificationResult.isVerified
+          }"
+        >
+          {{ verificationResult.isVerified ? 'Перевірка пройшена' : 'Виявлено порушення' }}
+        </div>
+        
+        <div *ngIf="!verificationResult.isVerified" class="violations-list">
+          <h4>Порушення:</h4>
+          <ul>
+            <li *ngFor="let violation of verificationResult.violations">
+              {{ violation }}
+            </li>
+          </ul>
+        </div>
+  
+        <p class="verification-date">
+          Дата перевірки: {{ verificationResult.verificationDate | date:'medium' }}
+        </p>
+      </div>
+      
+      <div *ngIf="!verificationResult" class="no-verification">
+        <p>Оберіть правило для перевірки</p>
+      </div>
+    </div>
+  </div>

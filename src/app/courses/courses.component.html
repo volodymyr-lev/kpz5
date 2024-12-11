@@ -1,9 +1,12 @@
-<div class="container-fluid px-4 py-5">
-    <h1 class="text-center mb-5" style="color: #e0e0e0;">Мої курси</h1>
+<div class="container-fluid px-4 py-5 lecturer-courses-view">
+    <h1 class="text-center mb-5" style="color: #e0e0e0;">
+      {{ isLecturer ? 'Мої курси для викладання' : 'Мої курси' }}
+    </h1>
     
     <ng-container *ngIf="courses$ | async as courses; else loading">
       <ng-container *ngIf="courses.length; else noCourses">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div *ngIf="!isLecturer" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <!-- Existing student view -->
           <div *ngFor="let course of courses" class="col">
             <div class="card course-card">
               <div class="card-body">
@@ -32,12 +35,61 @@
             </div>
           </div>
         </div>
+  
+        <div *ngIf="isLecturer" class="lecturer-course-list">
+          <div *ngFor="let course of courses" class="lecturer-course-item">
+            <div class="course-header">
+              <h3>{{ course.name }}</h3>
+              <div class="course-actions">
+                <button class="btn btn-edit" (click)="editCourse(course.id)">
+                  <i class="fas fa-edit"></i> Редагувати
+                </button>
+                <button class="btn btn-students" (click)="viewStudents(course.id)">
+                  <i class="fas fa-users"></i> Студенти
+                </button>
+              </div>
+            </div>
+            
+            <div class="course-details">
+              <div class="course-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Кредити:</span>
+                  <span class="stat-value">{{ course.credits }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Студентів:</span>
+                  <span class="stat-value">{{ course.studentCount || 0 }}</span>
+                </div>
+              </div>
+              
+              <p class="course-description">{{ course.syllabus }}</p>
+              
+              <div class="course-progress">
+                <div class="progress-label">Прогрес курсу</div>
+                <div class="progress">
+                  <div 
+                    class="progress-bar" 
+                    role="progressbar" 
+                    [style.width.%]="course.completionPercentage || 0"
+                    aria-valuemin="0" 
+                    aria-valuemax="100"
+                  >
+                    {{ course.completionPercentage || 0 }}%
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </ng-container>
       
       <ng-template #noCourses>
         <div class="empty-state">
           <img src="/api/placeholder/200/200" alt="No Courses" class="mb-4"/>
-          <p>Ви ще не записані на жодний курс.</p>
+          <p>{{ isLecturer ? 'Ви ще не створили жодного курсу.' : 'Ви ще не записані на жодний курс.' }}</p>
+          <button *ngIf="isLecturer" class="btn btn-create-course" (click)="createNewCourse()">
+            Створити новий курс
+          </button>
         </div>
       </ng-template>
     </ng-container>

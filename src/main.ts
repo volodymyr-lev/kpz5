@@ -17,6 +17,8 @@ import { CoursesComponent } from './app/courses/courses.component';
 import { ProfileComponent } from './app/profile/profile.component';
 import { CourseDetailComponent } from './app/course-detail/course-detail.component';
 import { AssignmentComponent } from './app/assignment/assignment.component';
+import { CourseStudentsComponent } from './app/course-students/course-students.component';
+import { CourseStudentDetailsComponent } from './app/course-student-details/course-student-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,15 +27,23 @@ const routes: Routes = [
   { path: 'unauthorized', component: UnauthorizedComponent },
   { 
     path: 'courses', component: CoursesComponent, canActivate:[RoleGuard], 
-    data: {roles:["Student"]}
+    data: {roles:["Student","Lecturer"]}
   }, 
   { 
     path: 'course/:id', component: CourseDetailComponent, canActivate:[RoleGuard],
     data: {roles:["Student"]}
   },
+  { 
+    path: 'course/:id/students', component: CourseStudentsComponent, canActivate:[RoleGuard],
+    data: {roles:["Lecturer"]}
+  },
+  { 
+    path: 'course/:id/students/:studentId', component: CourseStudentDetailsComponent, canActivate:[RoleGuard],
+    data: {roles:["Lecturer"]}
+  },
   {
     path: 'course/:courseId/assignment/:assignmentId', component: AssignmentComponent, canActivate:[RoleGuard],
-    data: {roles:["Student"]}
+    data: {roles:["Student","Lecturer"]}
   },
   { path: 'profile', component: ProfileComponent},
   { 
